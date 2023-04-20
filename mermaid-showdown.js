@@ -48,7 +48,7 @@
                         var pat = '%PLACEHOLDER' + i + '%';
                         text = text.replace(new RegExp(pat, 'gi'), '<pre><div class="mermaid" id="mermaid_' + i + '">' + mermaidBlocks[i] + '</div></pre>');
                     }
-                    //reset array
+                    //reset array3
                     mermaidBlocks = [];
                     return text;
                 }

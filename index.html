@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <title>Gist HTML Preview</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf8"/>
-  <meta name="apple-mobile-web-app-capable" content="yes"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-  <meta name="google-site-verification" content="8Wp1LLZkcbUY-3pg28dx2VFqTrzdj0wy4c2-QyVPpZ8"/>
+  <title>Diff HTML Preview</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="google-site-verification" content="8Wp1LLZkcbUY-3pg28dx2VFqTrzdj0wy4c2-QyVPpZ8" />
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -23,9 +24,48 @@
       max-width: 680px;
       padding: 0 15px;
     }
+
+    .container2 {
+      width: auto;
+      max-width: 90%;
+      padding: 0 15px;
+    }
+
+    table.diff {
+      font-family: Courier;
+      border: medium;
+      width: auto;
+    }
+
+    .diff_header {
+      background-color: #e0e0e0;
+      max-width: 50%;
+
+    }
+
+    td.diff_header {
+      text-align: right
+    }
+
+    .diff_next {
+      background-color: #c0c0c0
+    }
+
+    .diff_add {
+      background-color: #aaffaa
+    }
+
+    .diff_chg {
+      background-color: #ffff77
+    }
+
+    .diff_sub {
+      background-color: #ffaaaa
+    }
   </style>
 
 </head>
+
 <body>
   <div id="loading" class="container text-center">
     <br>
@@ -33,8 +73,9 @@
   </div>
 
   <div id="main" class="container hide">
-    <h2>Gist HTML Preview</h2>
-    <p class="lead">If <ins>File Name</ins> is empty, it will preview <ins>index.html</ins> or <ins>the first file</ins> as default.</p>
+    <h2>diff HTML Diff Preview</h2>
+    <p class="lead">If <ins>File Name</ins> is empty, it will preview <ins>index.html</ins> or <ins>the first file</ins>
+      as default.</p>
     <div class="form-inline" role="form">
       <div class="form-group">
         <label for="gist_id">https://gistpreview.github.io/?</label>
@@ -46,14 +87,38 @@
       </div>
       <button id="submit" class="btn btn-primary">Submit</button>
     </div>
-    <br/>
+    <br />
     <div id="alert-box"></div>
-    <a href="https://github.com/gistpreview/gistpreview.github.io"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+    <a href="https://github.com/gistpreview/gistpreview.github.io"><img
+        style="position: absolute; top: 0; right: 0; border: 0;"
+        src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67"
+        alt="Fork me on GitHub"
+        data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script src="https://cdn.rawgit.com/github/fetch/master/fetch.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+  <script src="https://unpkg.com/mermaid@8.14.0/dist/mermaid.min.js"></script>
+  <script src="mermaid-showdown.js"></script>
+  <script src="diff-showdown.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/diff2html/bundles/css/diff2html.min.css" />
+
+  <!-- Javascripts -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/diff2html/bundles/js/diff2html-ui.min.js"></script>
+
+
   <script src="./main.js"></script>
+
+  <div id="myDiffElement" class="container2"></div>
+
+  <!-- <div>
+    <script src="https://gist.github.com/dasf/sadfacab.js"></script>
+  </div> -->
 </body>
+
 </html>

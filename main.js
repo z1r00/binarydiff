@@ -1,18 +1,18 @@
 (function () {
-  function showMainPage () {
+  function showMainPage() {
     document.getElementById('main').className = 'container';  // remove class 'hide'
     document.getElementById('loading').className += ' hide';  // add class 'hide'
   }
 
-  function showError (message) {
+  function showError(message) {
     document.getElementById('alert-box').innerHTML
       += '<div class="alert alert-danger">'
-      +    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
-      +    message
-      +  '</div>';
+      + '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'
+      + message
+      + '</div>';
   }
 
-  function submit () {
+  function submit() {
     var query = document.getElementById('gist_id').value;
     var fileName = document.getElementById('file_name').value;
     if (fileName) {
@@ -44,35 +44,80 @@
 
   // 4. fetch data
   fetch('https://api.github.com/gists/' + gistId)
-  .then(function (res) {
-    return res.json().then(function (body) {
-      if (res.status === 200) {
-        return body;
-      }
-      console.log(res, body); // debug
-      throw new Error('Gist <strong>' + gistId + '</strong>, ' + body.message.replace(/\(.*\)/, ''));
-    });
-  })
-  .then(function (info) {
-    if (fileName === '') {
-      for (var file in info.files) {
-        // index.html or the first file
-        if (fileName === '' || file === 'index.html') {
-          fileName = file;
+    .then(function (res) {
+      return res.json().then(function (body) {
+        if (res.status === 200) {
+          return body;
+        }
+        console.log(res, body); // debug
+        throw new Error('Gist <strong>' + gistId + '</strong>, ' + body.message.replace(/\(.*\)/, ''));
+      });
+    })
+    .then(function (info) {
+      if (fileName === '') {
+        for (var file in info.files) {
+          // index.html or the first file
+          if (fileName === '' || file === 'index.html') {
+            fileName = file;
+          }
         }
       }
-    }
 
-    if (info.files.hasOwnProperty(fileName) === false) {
-      throw new Error('File <strong>' + fileName + '</strong> is not exist');
-    }
+      if (info.files.hasOwnProperty(fileName) === false) {
+        throw new Error('File <strong>' + fileName + '</strong> is not exist');
+      }
 
-    // 5. write data
-    var content = info.files[fileName].content;
-    document.write(content);
-  })
-  .catch(function (err) {
-    showMainPage();
-    showError(err.message);
-  });
+      // 5. write data
+      var content = info.files[fileName].content;
+      showdown.setOption('moreStyling', true);
+      showdown.setOption('simpleLineBreaks', true);
+      showdown.setOption('tables', true);
+      showdown.setFlavor('github');
+
+      //var converter = new showdown.Converter({ extensions: ['mermaid'] });
+      var converter = new showdown.Converter({ extensions: ['diff'] });
+
+      html = converter.makeHtml(content);
+
+
+      //document.write(html);
+      //var targetElement = document.getElementById('myDiffElement');
+      //targetElement.innerHTML = html
+      //mermaid.initialize({ startOnLoad: true });
+      //alert(hljs.listLanguages());
+      var targetElement = document.getElementById('myDiffElement');
+      var configuration = {
+        drawFileList: true,
+        fileListToggle: false,
+        fileListStartVisible: true,
+        fileContentToggle: false,
+        matching: 'lines',
+        outputFormat: 'side-by-side',
+        synchronisedScroll: true,
+        highlight: true,
+        renderNothingWhenEmpty: false,
+        diffStyle: 'char',
+        fileContentToggle: true,
+        //highlightLanguages: { '856 Meta': 'c' }
+      };
+      var diff2htmlUi = new Diff2HtmlUI(targetElement, html, configuration);
+      diff2htmlUi.draw();
+
+      // force c syntax
+      const files = diff2htmlUi.targetElement.querySelectorAll('.d2h-file-wrapper');
+      files.forEach(file => {
+        const language = file.getAttribute('data-lang');
+        file.setAttribute('data-lang', 'c')
+        console.log(language);
+      });
+
+      diff2htmlUi.highlightCode();
+
+      showMainPage();
+
+    })
+    .catch(function (err) {
+      showMainPage();
+      showError(err.message);
+    });
 })();

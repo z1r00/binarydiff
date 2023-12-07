@@ -30,18 +30,22 @@
   function addGistDetails(info) {
     var html = `<h4>Gist Details:</h4><ul>`
 
-    print_keys = ['url', 'description', 'id']
+    print_keys = ['html_url', 'description', 'id', 'created_at', 'updated_at']
 
     for (var item in info) {
-      console.log(item);
       if (print_keys.includes(item)) {
-        let line = `<li>${item} : ${info[item]} </li><br>`;
+
+        var line;
+        if (item.includes('url')) {
+          line = `<li>${item} : <a href="${info[item]}" target="_blank" rel="noopener">${info[item]}</a> </li><br>`;
+        } else {
+          line = `<li>${item} : ${info[item]} </li><br>`;
+        }
 
         html += line;
       }
 
     }
-
 
     document.getElementById('gist_details').innerHTML = html;
 
@@ -56,7 +60,7 @@
     for (var file in info.files) {
       //console.log(file);
       var raw_url = files[file]['raw_url']
-      let line = `<li><a href="?${query}/${file}">${file}</a> (${formatBytes(parseInt(files[file].size / 1024))}) [<a href="${raw_url}">raw_gist</a>] </li><br>`;
+      let line = `<li><a  target="_blank" rel="noopener" href="?${query}/${file}">${file}</a> (${formatBytes(parseInt(files[file].size / 1024))}) [<a href="${raw_url}">raw_gist</a>] </li><br>`;
       html += line;
     }
 

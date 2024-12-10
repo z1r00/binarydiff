@@ -1,20 +1,33 @@
-# Gist HTML Preview
+# Binary Diff
 
-Preview HTML file on Gist
+将对比结果并排差异显示
 
 ## Usage
 
-1. https://gistpreview.github.io/?:gist_id
+对比结果保存到gist仓库中，`Gist ID`必选，`File Name`可选
 
-  Preview __index.html__ or __the first file__ in gist.
+### 第一种用法
 
-2. https://gistpreview.github.io/?:gist_id/:file_name
-  
-  Preview specific __file_name__ in gist.
+1. [www.z1r0.top/binarydiff/?Gist ID](http://www.z1r0.top/binarydiff/)
+
+   `Gist Id`替换成gist仓库id
+
+   默认预览`Gist ID`对应的第一个文件
+
+2. [www.z1r0.top/binarydiff/?Gist ID/File Name](http://www.z1r0.top/binarydiff/)
+
+   预览`Gist ID`仓库里的特定的`File Name`
+
+### 第二种方法
+
+1. 在`Gist ID`里输入gist仓库id，默认预览第一个文件
+2. 输入`File Name`即可预览`Gist ID`仓库里的特定的`File Name`
 
 ## Example
 
-https://gist.github.com/zlargon/9de497580ac33180e6128c187e2a93bc
+https://www.z1r0.top/binarydiff/?4ccc9f604cb8c80c278975a0c2c7f4f6
+
+https://www.z1r0.top/binarydiff/?4ccc9f604cb8c80c278975a0c2c7f4f6/1
 
 ## Github API Rate Limiting
 

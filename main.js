@@ -30,7 +30,7 @@
   function addGistDetails(info) {
     var html = `<h4>Gist Details:</h4><ul>`
 
-    print_keys = ['html_url', 'description', 'id', 'created_at', 'updated_at']
+    print_keys = ['html_url', 'description', 'id']
 
     for (var item in info) {
       if (print_keys.includes(item)) {
@@ -88,6 +88,7 @@
 
   function processContent(content, fileName) {
     console.log(fileName)
+    console.log(content)
 
 
 
@@ -153,6 +154,7 @@
         // use diff2html to show standard diff
         var diff2htmlUi = new Diff2HtmlUI(targetElement, html, configuration);
         diff2htmlUi.draw();
+        //diff2htmlUi.highlightCode();
 
         // force c syntax
         const files = diff2htmlUi.targetElement.querySelectorAll('.d2h-file-wrapper');
@@ -238,7 +240,7 @@
 
 
       addGistDetails(info);
-      addFilesToList(info);
+      //addFilesToList(info);
 
       if (fileName === '') {
         for (var file in info.files) {
@@ -258,6 +260,7 @@
 
           // The API call was successful!
           if (res.status === 200) {
+            //console.log(res.text());
             res.text().then(text => processContent(text, fileName))
           }
           else {

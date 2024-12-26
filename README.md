@@ -25,9 +25,7 @@
 
 ## Example
 
-https://www.z1r0.top/binarydiff/?4ccc9f604cb8c80c278975a0c2c7f4f6
-
-https://www.z1r0.top/binarydiff/?4ccc9f604cb8c80c278975a0c2c7f4f6/1
+https://www.z1r0.top/binarydiff/?01b49f04d0aff9e0951ced399418dd93/afd.sys.x64.10.0.22621.1028.sqlite-afd.sys.x64.10.0.22621.1415.sqlite.diff
 
 ## Github API Rate Limiting
 

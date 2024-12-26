@@ -30,7 +30,7 @@
   function addGistDetails(info) {
     var html = `<h4>Gist Details:</h4><ul>`
 
-    print_keys = ['html_url', 'description', 'id']
+    print_keys = ['description', 'id']
 
     for (var item in info) {
       if (print_keys.includes(item)) {
@@ -60,7 +60,7 @@
     for (var file in info.files) {
       //console.log(file);
       var raw_url = files[file]['raw_url']
-      let line = `<li><a  target="_blank" rel="noopener" href="?${query}/${file}">${file}</a> (${formatBytes(parseInt(files[file].size / 1024))}) [<a href="${raw_url}">raw_gist</a>] </li><br>`;
+      let line = `<li><a  target="_self" rel="noopener" href="?${query}/${file}">${file}</a> (${formatBytes(parseInt(files[file].size / 1024))})  </li><br>`;
       html += line;
     }
 
@@ -204,6 +204,19 @@
 
   }
 
+
+  $(".btn_top").hide();         //刚进入页面时设置为隐藏
+	$(".btn_top").bind("click",function(){     //单击时返回顶部
+		$('html, body').animate({scrollTop: 0},300);return false;
+	});
+	$(window).bind('scroll resize',function(){   //判断页面所在的位置，小于300就隐藏，否则就显示
+		if($(window).scrollTop()<=300){
+			$(".btn_top").hide();
+		}else{
+			$(".btn_top").show();
+		}
+});
+
   document.getElementById('submit').onclick = submit;
   document.onkeypress = function (e) {
     if (e.keyCode === 13) submit();
@@ -240,7 +253,7 @@
 
 
       addGistDetails(info);
-      //addFilesToList(info);
+      addFilesToList(info);
 
       if (fileName === '') {
         for (var file in info.files) {
